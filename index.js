@@ -20,6 +20,16 @@ var waitlist = [
     { name: "justin" }
 ];
 
+//route that send user to the main page
+app.get("/", function(req, res) {
+    res.sendFile(path.join(__dirname, "index.html"));
+  });
+
+//route that send user to the page to add a reservation
+app.get("/add", function(req, res) {
+  res.sendFile(path.join(__dirname, "reservationform.html"));
+});
+
 
 // routes for localhost
 app.get("/", function (req, res) {
@@ -27,12 +37,12 @@ app.get("/", function (req, res) {
     res.send("welcome home");
 });
 
-app.get("/reservations", function (req, res) {
+app.get("/api/reservations", function (req, res) {
     console.log("reservations");
     return res.json(reservation);
 });
 
-app.get("/waitlist", function (req, res) {
+app.get("/api/waitlist", function (req, res) {
     console.log("waitlist");
     return res.json(waitlist);
 });
@@ -41,6 +51,10 @@ app.get("/waitlist", function (req, res) {
 app.post("/api/make", (req, res) => {
     var data = req.body;
     console.log(data);
+
+    reservations.push(data);
+
+    res.json(data);
 });
 
 
