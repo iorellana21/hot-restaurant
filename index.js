@@ -7,6 +7,7 @@ var app = express();
 // create PORT
 var PORT = 8080;
 
+app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -21,20 +22,13 @@ var waitlist = [
 ];
 
 //route that send user to the main page
-app.get("/", function(req, res) {
-    res.sendFile(path.join(__dirname, "index.html"));
-  });
-
-//route that send user to the page to add a reservation
-app.get("/add", function(req, res) {
-  res.sendFile(path.join(__dirname, "reservationform.html"));
+app.get("/", function (req, res) {
+    res.sendFile(path.join(__dirname, "public/index.html"));
 });
 
-
-// routes for localhost
-app.get("/", function (req, res) {
-    console.log("home");
-    res.send("welcome home");
+//route that send user to the page to add a reservation
+app.get("/add", function (req, res) {
+    res.sendFile(path.join(__dirname, "public/reservationform.html"));
 });
 
 app.get("/api/reservations", function (req, res) {
@@ -52,7 +46,7 @@ app.post("/api/make", (req, res) => {
     var data = req.body;
     console.log(data);
 
-    reservations.push(data);
+    reservation.push(data);
 
     res.json(data);
 });
